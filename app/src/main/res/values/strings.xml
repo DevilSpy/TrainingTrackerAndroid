@@ -5,4 +5,12 @@
     <string name="action_settings">Settings</string>
 
     <string name="login">Sign in</string>
+    <string name="usernameHint">Username</string>
+    <string name="passwordHint">Password</string>
+
+    <string name="addNewExercise">Add new exercise</string>
+    <string name="addDate"><u>Date</u></string>
+    <string name="addParticipants"><u>Participants</u></string>
+    <string name="addHours"><u>Hours</u></string>
+    <string name="addLocation"><u>Location</u></string>
 </resources>

@@ -1,6 +1,7 @@
 package fi.sami.trainingtracker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -35,36 +36,28 @@ public class LoginActivity extends Activity {
         // get db instance
         db = (new DatabaseOpenHelper(this)).getWritableDatabase();
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    }
 
-                String name = usernameText.getText().toString();
-                String password = passwordText.getText().toString();
+    public void login(View view) {
+        String name = usernameText.getText().toString();
+        String password = passwordText.getText().toString();
 
-                String dbName = getName(name);
-                String dbPassword = getPassword(name);
+        String dbName = getName(name);
+        String dbPassword = getPassword(name);
 
-                if(dbName != null) {
-                    if(name.equals(dbName) && password.equals(dbPassword)) {
-                        Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Wrong credentials", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), "Wrong credentials", Toast.LENGTH_SHORT).show();
-                }
-
-//                if(usernameText.getText().toString().equals("admin") && passwordText.getText().toString().equals("admin")) {
-//                    Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(getApplicationContext(), "Wrong credentials", Toast.LENGTH_SHORT).show();
-//                }
+        if(dbName != null) {
+            if(name.equals(dbName) && password.equals(dbPassword)) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(getApplicationContext(), "Wrong credentials", Toast.LENGTH_SHORT).show();
             }
-        });
-
+        } else {
+            Toast.makeText(getApplicationContext(), "Wrong credentials", Toast.LENGTH_SHORT).show();
+        }
 
     }
+
 
     public String getName(String name) {
         cursor = db.rawQuery("SELECT name FROM " + DATABASE_TABLE + " WHERE name='" + name + "'", null);

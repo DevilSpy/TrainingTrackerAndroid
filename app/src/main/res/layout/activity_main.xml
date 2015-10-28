@@ -3,46 +3,86 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start a new activity for result"
-        android:id="@+id/button"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="startNewActivityForResult" />
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:background="@color/backgroundColor">
 
     <TextView
+        android:id="@+id/trainingTrackerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="This is a Main Activity"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" />
+        android:text="@string/app_name"
+        android:gravity="left|top"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        />
 
     <TextView
+        android:id="@+id/addNewExerciseText"
+        android:text="@string/addNewExercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/resultTextView"
-        android:layout_below="@+id/button"
-        android:layout_alignEnd="@+id/textView"
-        android:layout_marginTop="69dp"
-        android:layout_alignStart="@+id/button" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        />
 
-    <Button
-        android:layout_width="wrap_content"
+    <TableRow
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Start a new activity"
-        android:id="@+id/button2"
-        android:layout_above="@+id/button"
-        android:layout_alignStart="@+id/button"
-        android:layout_alignEnd="@+id/button"
-        android:onClick="startNewActivity" />
+        android:layout_below="@+id/addNewExerciseText"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/addDateText"
+            android:text="@string/addDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/textGrey"
+            android:textSize="20sp"
+            android:onClick="selectDate"
+            />
+
+        <TextView
+            android:id="@+id/addParticipantsText"
+            android:text="@string/addParticipants"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/textGrey"
+            android:layout_toRightOf="@+id/addDateText"
+            android:textSize="20sp"
+            />
+
+        <TextView
+            android:id="@+id/addHoursText"
+            android:text="@string/addHours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/textGrey"
+            android:layout_toRightOf="@+id/addParticipantsText"
+            android:textSize="20sp"
+            />
+
+        <TextView
+            android:id="@+id/addLocationText"
+            android:text="@string/addLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/textGrey"
+            android:layout_toRightOf="@+id/addHoursText"
+            android:textSize="20sp"
+            />
+    </TableRow>
+
+
 
 
 
