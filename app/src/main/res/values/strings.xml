@@ -13,4 +13,5 @@
     <string name="addParticipants"><u>Participants</u></string>
     <string name="addHours"><u>Hours</u></string>
     <string name="addLocation"><u>Location</u></string>
+    <string name="addNewExerciseButton">Add</string>
 </resources>

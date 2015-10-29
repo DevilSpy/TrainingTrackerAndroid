@@ -19,8 +19,6 @@ import fi.sami.trainingtracker.model.Exercise;
  */
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
-    static Date returnableDate;
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Calendar calendar = Calendar.getInstance();
@@ -28,20 +26,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         int month = calendar.get(Calendar.MONTH);
         int year = calendar.get(Calendar.YEAR);
 
-        return new DatePickerDialog(getActivity(), this, year, month, day);
+        return new DatePickerDialog(getActivity(), (MainActivity)getActivity(), year, month, day);
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.YEAR, year);
 
-        returnableDate = calendar.getTime();
-
-    }
-
-    public static Date returnDate() {
-        return returnableDate;
     }
 }
