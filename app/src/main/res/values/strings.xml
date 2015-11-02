@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">TrainingTracker</string>
 
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
@@ -14,4 +17,6 @@
     <string name="addHours"><u>Hours</u></string>
     <string name="addLocation"><u>Location</u></string>
     <string name="addNewExerciseButton">Add</string>
+
+    <string name="selectParticipants">Select participants</string>
 </resources>

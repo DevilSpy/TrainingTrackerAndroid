@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="toppings">
+        <item>Cheese</item>
+        <item>Sauce</item>
+        <item>Salami</item>
+    </string-array>
+
+    <string-array name="participants">
+
+    </string-array>
+
+</resources>

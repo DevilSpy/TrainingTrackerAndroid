@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,6 +14,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +25,8 @@ import org.w3c.dom.Text;
 import java.util.Calendar;
 import java.util.Date;
 
-import fi.sami.trainingtracker.component.ParticipantsFragment;
+import fi.sami.trainingtracker.component.SelectParticipantsDialogFragment;
+
 
 public class MainActivity extends Activity implements DatePickerDialog.OnDateSetListener {
 
@@ -31,11 +37,9 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(savedInstanceState == null) {
-            getFragmentManager().beginTransaction().add(R.id.container, new ParticipantsFragment()).commit();
-        }
 
     }
+
 
     public void onStart() {
         super.onStart();
@@ -77,8 +81,10 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
     }
 
     public void selectParticipants(View view) {
-
+        SelectParticipantsDialogFragment fragment = new SelectParticipantsDialogFragment();
+        fragment.show(getFragmentManager(), "participantsPicker");
     }
+
 
 
     public void addNewExercise(View view) {
