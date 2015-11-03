@@ -4,16 +4,22 @@ package fi.sami.trainingtracker.model;
  * Created by Sami on 28.10.2015.
  */
 public class Location {
+    private String name;
     private String latitude;
     private String longitude;
 
     public Location(){
     }
 
-    public Location(String latitude, String longitude) {
+    public Location(String name, String latitude, String longitude) {
+        this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+    public String getName() { return name; }
+
+    public void setName(String name) { this.name = name; }
 
     public String getLatitude() {
         return latitude;
@@ -34,7 +40,8 @@ public class Location {
     @Override
     public String toString() {
         return "Location{" +
-                "latitude='" + latitude + '\'' +
+                "name='" + name + '\'' +
+                ", latitude='" + latitude + '\'' +
                 ", longitude='" + longitude + '\'' +
                 '}';
     }

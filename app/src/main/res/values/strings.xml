@@ -19,4 +19,6 @@
     <string name="addNewExerciseButton">Add</string>
 
     <string name="selectParticipants">Select participants</string>
+
+    <string name="set">Set</string>
 </resources>

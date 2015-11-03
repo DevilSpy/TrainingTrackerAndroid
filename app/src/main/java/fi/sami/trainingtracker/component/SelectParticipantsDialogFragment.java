@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import fi.sami.trainingtracker.DatabaseOpenHelper;
@@ -21,13 +23,6 @@ import fi.sami.trainingtracker.R;
  * Created by Sami on 30.10.2015.
  */
 public class SelectParticipantsDialogFragment extends DialogFragment {
-    private final String DATABASE_TABLE = "user";
-    private final int DELETE_ID = 0;
-    private SQLiteDatabase db;
-    private Cursor cursor;
-    private ListView listView;
-
-
     List mSelectedItems = new ArrayList();
 
     @Override
@@ -38,23 +33,35 @@ public class SelectParticipantsDialogFragment extends DialogFragment {
 
         final View dialogView = inflater.inflate(R.layout.participants_dialogfragment, null, false);
 
-       String[] participants = getParticipants();
+        final String[] participants = getParticipants();
 
         builder.setView(dialogView)
                .setTitle(R.string.selectParticipants)
                 .setMultiChoiceItems(participants, null, new DialogInterface.OnMultiChoiceClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id, boolean isChecked) {
-                    if(isChecked) {
-                        mSelectedItems.add(id);
-                    } else if(mSelectedItems.contains(id)) {
-                        mSelectedItems.remove(Integer.valueOf(id));
+                    @Override
+                    public void onClick(DialogInterface dialog, int id, boolean isChecked) {
+                        if (isChecked) {
+                            mSelectedItems.add(id);
+                        } else if (mSelectedItems.contains(id)) {
+                            mSelectedItems.remove(Integer.valueOf(id));
+                        }
                     }
-                }
-        })
+                })
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    // TODO: do something with selected participants
                     public void onClick(DialogInterface dialog, int id) {
-                        // FIRE ZE MISSILES!
+                        TextView selectedParticipantsTextView = (TextView) getActivity().findViewById(R.id.participantsSetText);
+
+                        List<String> participantsArray = Arrays.asList(participants);
+
+                        StringBuilder builder = new StringBuilder();
+
+                        for (int i = 0; i < mSelectedItems.size(); i++) {
+                            builder.append(participantsArray.get((int)mSelectedItems.get(i)));
+                            builder.append("\n");
+                        }
+
+                        selectedParticipantsTextView.setText(builder.toString());
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

@@ -70,6 +70,7 @@
             android:textColor="@color/textGrey"
             android:layout_toRightOf="@+id/addParticipantsText"
             android:textSize="20sp"
+            android:onClick="selectHours"
             />
 
         <TextView
@@ -82,6 +83,7 @@
             android:textColor="@color/textGrey"
             android:layout_toRightOf="@+id/addHoursText"
             android:textSize="20sp"
+            android:onClick="selectLocation"
             />
     </TableRow>
 
@@ -90,6 +92,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/addNewExerciseSelectors"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:id="@+id/participantsSetText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dateSetText"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:id="@+id/hoursSetText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/participantsSetText"
         android:textSize="15sp"
         android:textColor="@color/white"
         />

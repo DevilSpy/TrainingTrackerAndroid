@@ -1,4 +1,4 @@
-package fi.sami.trainingtracker;
+package fi.sami.trainingtracker.component;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Date;
 
+import fi.sami.trainingtracker.MainActivity;
 import fi.sami.trainingtracker.model.Exercise;
 
 /**
