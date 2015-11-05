@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import fi.sami.trainingtracker.component.DatePickerFragment;
+import fi.sami.trainingtracker.component.SelectLocationDialogFragment;
 import fi.sami.trainingtracker.component.SelectParticipantsDialogFragment;
 
 
@@ -98,7 +99,7 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
         final String[] displayValues = {"0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5"};
 
         final NumberPicker numberPicker = (NumberPicker) dialog.findViewById(R.id.numberPicker);
-        numberPicker.setMaxValue(displayValues.length + 1);
+        numberPicker.setMaxValue(displayValues.length - 1);
         numberPicker.setMinValue(0);
         numberPicker.setWrapSelectorWheel(false);
         numberPicker.setOnValueChangedListener(this);
@@ -119,7 +120,7 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
 
                 // TODO: do something with hours value
                 TextView selectedHours = (TextView)findViewById(R.id.hoursSetText);
-                selectedHours.setText(hoursArray.get(numberPicker.getValue()));
+                selectedHours.setText("Hours: " + hoursArray.get(numberPicker.getValue()));
                 dialog.dismiss();
             }
         });
@@ -128,7 +129,8 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
     }
 
     public void selectLocation(View view) {
-
+        SelectLocationDialogFragment fragment = new SelectLocationDialogFragment();
+        fragment.show(getFragmentManager(), "locationPicker");
     }
 
 

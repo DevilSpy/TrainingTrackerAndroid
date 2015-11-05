@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,10 +27,9 @@ public class SelectParticipantsDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        final View dialogView = inflater.inflate(R.layout.participants_dialogfragment, null, false);
+        final View dialogView = inflater.inflate(R.layout.list_dialogfragment, null, false);
 
         final String[] participants = getParticipants();
 
@@ -55,10 +53,17 @@ public class SelectParticipantsDialogFragment extends DialogFragment {
                         List<String> participantsArray = Arrays.asList(participants);
 
                         StringBuilder builder = new StringBuilder();
+                        builder.append("Participants:\n");
+
+                        int mSelectedItemsSize = mSelectedItems.size() - 1;
 
                         for (int i = 0; i < mSelectedItems.size(); i++) {
-                            builder.append(participantsArray.get((int)mSelectedItems.get(i)));
-                            builder.append("\n");
+                            builder.append(participantsArray.get((int) mSelectedItems.get(i)));
+
+                            // don't put line break after the last participant
+                            if (mSelectedItemsSize != i) {
+                                builder.append("\n");
+                            }
                         }
 
                         selectedParticipantsTextView.setText(builder.toString());
@@ -79,7 +84,6 @@ public class SelectParticipantsDialogFragment extends DialogFragment {
 
         SQLiteDatabase db = (new DatabaseOpenHelper(getContext())).getWritableDatabase();
         String query = "SELECT name FROM user;";
-
 
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()) {

@@ -18,7 +18,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     public DatabaseOpenHelper(Context context) {
         // Context, db name, optional cursor factory, db version
-        super(context, DATABASE_NAME, null, 4);
+        super(context, DATABASE_NAME, null, 5);
     }
 
     @Override
@@ -32,9 +32,12 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         stringBuilder.append("('Sami', 'sala'), ");
         stringBuilder.append("('S', 's'), ");
         stringBuilder.append("('Marko', 'marko'), ");
-        stringBuilder.append("('Pena', 'pena')");
+        stringBuilder.append("('Pena', 'pena');");
 
         db.execSQL(stringBuilder.toString());
+
+        db.execSQL("CREATE TABLE location(_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, latitude TEXT, longitude TEXT);");
+        db.execSQL("INSERT INTO location(name, latitude, longitude) VALUES ('Savelan sali', '62.241480', '25.709366'), ('Mattilanniemi', '62.229521', '25.731198');");
 
         // create sample data
 //        ContentValues values = new ContentValues();
