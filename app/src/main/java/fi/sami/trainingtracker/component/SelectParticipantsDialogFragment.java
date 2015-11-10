@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import fi.sami.trainingtracker.DatabaseOpenHelper;
+import fi.sami.trainingtracker.MainActivity;
 import fi.sami.trainingtracker.R;
 
 /**
@@ -52,13 +53,17 @@ public class SelectParticipantsDialogFragment extends DialogFragment {
 
                         List<String> participantsArray = Arrays.asList(participants);
 
+                        List<String> participants = new ArrayList<String>();
+
                         StringBuilder builder = new StringBuilder();
                         builder.append("Participants:\n");
 
                         int mSelectedItemsSize = mSelectedItems.size() - 1;
 
                         for (int i = 0; i < mSelectedItems.size(); i++) {
-                            builder.append(participantsArray.get((int) mSelectedItems.get(i)));
+                            String participant = participantsArray.get((int) mSelectedItems.get(i));
+                            builder.append(participant);
+                            participants.add(participant);
 
                             // don't put line break after the last participant
                             if (mSelectedItemsSize != i) {
@@ -67,6 +72,10 @@ public class SelectParticipantsDialogFragment extends DialogFragment {
                         }
 
                         selectedParticipantsTextView.setText(builder.toString());
+
+                        SelectParticipantsDialogFragmentListener activity = (SelectParticipantsDialogFragmentListener) getActivity();
+                        activity.onReturnValue(participants);
+
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -98,5 +107,9 @@ public class SelectParticipantsDialogFragment extends DialogFragment {
 
         String[] participantsStringArray = participants.toArray(new String[participants.size()]);
         return participantsStringArray;
+    }
+
+    public interface SelectParticipantsDialogFragmentListener {
+        public void onReturnValue(List<String> participants);
     }
 }

@@ -21,4 +21,8 @@
     <string name="selectParticipants">Select participants</string>
 
     <string name="set">Set</string>
+
+    <string name="allMustBeSet">All resources must be set</string>
+    <string name="somethingWentTerriblyWrong">Something went terribly wrong</string>
+    <string name="participantsMustBeSet">At least one participant must be set</string>
 </resources>

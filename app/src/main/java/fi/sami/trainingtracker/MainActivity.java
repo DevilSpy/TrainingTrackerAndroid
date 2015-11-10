@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,11 +22,16 @@ import java.util.List;
 import fi.sami.trainingtracker.component.DatePickerFragment;
 import fi.sami.trainingtracker.component.SelectLocationDialogFragment;
 import fi.sami.trainingtracker.component.SelectParticipantsDialogFragment;
+import fi.sami.trainingtracker.model.Exercise;
+import fi.sami.trainingtracker.model.Location;
 
 
-public class MainActivity extends Activity implements DatePickerDialog.OnDateSetListener, NumberPicker.OnValueChangeListener {
+public class MainActivity extends Activity implements DatePickerDialog.OnDateSetListener, NumberPicker.OnValueChangeListener, SelectLocationDialogFragment.SelectLocationDialogFragmentListener, SelectParticipantsDialogFragment.SelectParticipantsDialogFragmentListener {
 
-    private boolean dateSet = false;
+    private Float hours;
+    private Date date;
+    private String location;
+    private List<String> participants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +42,9 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
     public void onStart() {
         super.onStart();
 
-        Button addExerciseButton = (Button)findViewById(R.id.addNewExerciseButton);
-        addExerciseButton.setEnabled(false);
+//        Button addExerciseButton = (Button)findViewById(R.id.addNewExerciseButton);
+//        addExerciseButton.setEnabled(false);
 
-        if(dateSet) {
-            addExerciseButton.setEnabled(true);
-        }
     }
 
     public void selectDate(View view) {
@@ -57,14 +61,12 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
         calendar.set(Calendar.YEAR, year);
 
         // TODO: do something with the date
-        Date date = calendar.getTime();
+        date = calendar.getTime();
 
         String dateToDisplay = year + "-" + month + "-" + day;
 
         TextView selectedDateTextView = (TextView)findViewById(R.id.dateSetText);
         selectedDateTextView.setText("Date: " + dateToDisplay);
-
-        dateSet = true;
 
         Button addExerciseButton = (Button)findViewById(R.id.addNewExerciseButton);
         addExerciseButton.setEnabled(true);
@@ -76,7 +78,11 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
         fragment.show(getFragmentManager(), "participantsPicker");
     }
 
-    // TODO: numberPicker crashes for some reason when reached maxValue
+    @Override
+    public void onReturnValue(List<String> participantsList) {
+        participants = participantsList;
+    }
+
     public void selectHours(View view) {
         // show NumberPicker
         show();
@@ -118,9 +124,12 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
 
                 List<String> hoursArray = Arrays.asList(displayValues);
 
-                // TODO: do something with hours value
                 TextView selectedHours = (TextView)findViewById(R.id.hoursSetText);
-                selectedHours.setText("Hours: " + hoursArray.get(numberPicker.getValue()));
+                String hoursString = hoursArray.get(numberPicker.getValue());
+                selectedHours.setText("Hours: " + hoursString);
+
+                hours = Float.parseFloat(hoursString);
+
                 dialog.dismiss();
             }
         });
@@ -133,9 +142,52 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
         fragment.show(getFragmentManager(), "locationPicker");
     }
 
+    @Override
+    public void onReturnValue(String locationFromDialog) {
+        location = locationFromDialog;
+    }
+
 
     public void addNewExercise(View view) {
-        Toast.makeText(getApplicationContext(), "Exercise added to database", Toast.LENGTH_SHORT).show();
+        List<Exercise> exercises = new ArrayList<>();
+
+        if (date == null || hours == null || location == null || participants == null) {
+            Toast.makeText(getApplicationContext(), R.string.allMustBeSet, Toast.LENGTH_SHORT).show();
+        } else if (!participants.isEmpty()) {
+            for (String participant : participants) {
+                Exercise exercise = new Exercise();
+                exercise.setDate(date);
+                exercise.setHours(hours);
+                exercise.setLocation(new Location(location));
+                exercise.setParticipant(participant);
+
+                exercises.add(exercise);
+
+            }
+//            saveExercise(exercises);
+            Toast.makeText(getApplicationContext(), exercises.toString(), Toast.LENGTH_LONG).show();
+        } else if(participants.isEmpty()) {
+            Toast.makeText(getApplicationContext(), R.string.participantsMustBeSet, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.somethingWentTerriblyWrong, Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    // TODO: not working, use some ORM
+    public void saveExercise(List<Exercise> exercises) {
+        SQLiteDatabase db = (new DatabaseOpenHelper(getBaseContext())).getWritableDatabase();
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("INSERT INTO exercise(date, location)");
+        builder.append( " VALUES(" );
+        builder.append(exercises.get(0).getDate());
+        builder.append(",");
+        builder.append(exercises.get(0).getLocation());
+        builder.append(");");
+
+        db.execSQL(builder.toString());
+
     }
 
 

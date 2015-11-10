@@ -11,10 +11,8 @@ public class Location {
     public Location(){
     }
 
-    public Location(String name, String latitude, String longitude) {
+    public Location(String name) {
         this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
     }
 
     public String getName() { return name; }

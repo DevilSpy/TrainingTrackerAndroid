@@ -9,13 +9,13 @@ public class Exercise {
 
     private Date date;
     private String participant;
-    private Integer hours;
+    private Float hours;
     private Location location;
 
     public Exercise() {
     }
 
-    public Exercise(Date date, String participant, Integer hours, Location location) {
+    public Exercise(Date date, String participant, Float hours, Location location) {
         this.setDate(date);
         this.setParticipant(participant);
         this.setHours(hours);
@@ -39,11 +39,11 @@ public class Exercise {
         this.participant = participant;
     }
 
-    public Integer getHours() {
+    public Float getHours() {
         return hours;
     }
 
-    public void setHours(Integer hours) {
+    public void setHours(Float hours) {
         this.hours = hours;
     }
 

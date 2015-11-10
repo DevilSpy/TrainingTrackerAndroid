@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import fi.sami.trainingtracker.DatabaseOpenHelper;
+import fi.sami.trainingtracker.MainActivity;
 import fi.sami.trainingtracker.R;
 
 /**
@@ -42,7 +43,6 @@ public class SelectLocationDialogFragment extends DialogFragment {
                     }
                 })
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    // TODO: do something with selected location
                     public void onClick(DialogInterface dialog, int id) {
                         TextView selectedLocationTextView = (TextView) getActivity().findViewById(R.id.locationSetText);
                         List<String> locationsArray = Arrays.asList(locations);
@@ -50,6 +50,9 @@ public class SelectLocationDialogFragment extends DialogFragment {
                         String location = locationsArray.get((int)mSelectedItem);
 
                         selectedLocationTextView.setText("Location: " + location);
+
+                        SelectLocationDialogFragmentListener activity = (SelectLocationDialogFragmentListener) getActivity();
+                        activity.onReturnValue(location);
                     }
                 })
                 .setNegativeButton(R.string.cancel,  new DialogInterface.OnClickListener() {
@@ -80,5 +83,9 @@ public class SelectLocationDialogFragment extends DialogFragment {
 
         String[] locationsStringArray = locations.toArray(new String[locations.size()]);
         return locationsStringArray;
+    }
+
+    public interface SelectLocationDialogFragmentListener {
+        public void onReturnValue(String location);
     }
 }

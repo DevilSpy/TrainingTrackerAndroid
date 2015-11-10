@@ -18,7 +18,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     public DatabaseOpenHelper(Context context) {
         // Context, db name, optional cursor factory, db version
-        super(context, DATABASE_NAME, null, 5);
+        super(context, DATABASE_NAME, null, 7);
     }
 
     @Override
@@ -39,6 +39,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE location(_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, latitude TEXT, longitude TEXT);");
         db.execSQL("INSERT INTO location(name, latitude, longitude) VALUES ('Savelan sali', '62.241480', '25.709366'), ('Mattilanniemi', '62.229521', '25.731198');");
 
+        db.execSQL("CREATE TABLE exercise(_id INTEGER PRIMARY KEY AUTOINCREMENT, date DATE, location STRING);");
+        db.execSQL("CREATE TABLE userExercise(_id INTEGER PRIMARY KEY AUTOINCREMENT, hours FLOAT, user_id INTEGER, exercise_id INTEGER, FOREIGN KEY (user_id) REFERENCES user(_id), FOREIGN KEY (exercise_id) REFERENCES exercise(_id))");
         // create sample data
 //        ContentValues values = new ContentValues();
 //        values.put(NAME, "Sami");
@@ -51,6 +53,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS location;");
+        db.execSQL("DROP TABLE IF EXISTS exercise;");
+        db.execSQL("DROP TABLE IF EXISTS userExercise;");
         onCreate(db);
     }
 
