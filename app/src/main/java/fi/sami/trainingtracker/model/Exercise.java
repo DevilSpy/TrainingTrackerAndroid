@@ -1,23 +1,25 @@
 package fi.sami.trainingtracker.model;
 
+import com.orm.SugarRecord;
+
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Sami on 28.10.2015.
  */
-public class Exercise {
+public class Exercise extends SugarRecord<Exercise>{
 
     private Date date;
-    private String participant;
     private Float hours;
     private Location location;
+    private List<User> users;
 
     public Exercise() {
     }
 
-    public Exercise(Date date, String participant, Float hours, Location location) {
+    public Exercise(Date date, Float hours, Location location) {
         this.setDate(date);
-        this.setParticipant(participant);
         this.setHours(hours);
         this.setLocation(location);
     }
@@ -29,14 +31,6 @@ public class Exercise {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public String getParticipant() {
-        return participant;
-    }
-
-    public void setParticipant(String participant) {
-        this.participant = participant;
     }
 
     public Float getHours() {
@@ -59,7 +53,6 @@ public class Exercise {
     public String toString() {
         return "Exercise{" +
                 "date=" + date +
-                ", participant='" + participant + '\'' +
                 ", hours=" + hours +
                 ", location=" + location +
                 '}';

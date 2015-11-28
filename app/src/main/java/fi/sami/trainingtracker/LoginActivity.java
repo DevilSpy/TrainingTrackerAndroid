@@ -2,23 +2,25 @@ package fi.sami.trainingtracker;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import fi.sami.trainingtracker.model.User;
 
 /**
  * Created by Sami on 20.10.2015.
  */
 public class LoginActivity extends Activity {
-    private final String DATABASE_TABLE = "user";
-    private final int DELETED_ID = 0;
-    private SQLiteDatabase db;
-    private Cursor cursor;
+//    private final String DATABASE_TABLE = "user";
+//    private final int DELETED_ID = 0;
+//    private SQLiteDatabase db;
+//    private Cursor cursor;
 
     Button loginButton;
     EditText usernameText;
@@ -33,19 +35,36 @@ public class LoginActivity extends Activity {
         usernameText = (EditText) findViewById(R.id.editTextUsername);
         passwordText = (EditText) findViewById(R.id.editTextPassword);
 
-        // get db instance
-        db = (new DatabaseOpenHelper(this)).getWritableDatabase();
+        List<User> users = User.listAll(User.class);
 
+        if(users == null || users.isEmpty()) {
+            User user = new User("Sami", "pwd");
+            User user2 = new User("Keke", "keke");
+            User user3 = new User("Jane", "jane");
+            User user4 = new User("Make", "make");
+
+            user.save();
+            user2.save();
+            user3.save();
+            user4.save();
+        }
     }
 
     public void login(View view) {
         String name = usernameText.getText().toString();
         String password = passwordText.getText().toString();
 
-        String dbName = getName(name);
-        String dbPassword = getPassword(name);
+        List<User> users = User.find(User.class, "name = ? and password = ?", name, password);
 
-        if(dbName != null) {
+        String dbName = null;
+        String dbPassword = null;
+
+        if(users != null && !users.isEmpty() && users.get(0) != null) {
+            dbName = users.get(0).getName();
+            dbPassword = users.get(0).getPassword();
+        }
+
+        if(dbName != null && dbPassword != null) {
             if(name.equals(dbName) && password.equals(dbPassword)) {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -58,33 +77,8 @@ public class LoginActivity extends Activity {
 
     }
 
-
-    public String getName(String name) {
-        cursor = db.rawQuery("SELECT name FROM " + DATABASE_TABLE + " WHERE name='" + name + "'", null);
-
-        if(cursor.moveToFirst()) {
-            return cursor.getString(0);
-        } else {
-            return null;
-        }
-
-
-    }
-
-    public String getPassword(String name) {
-        cursor = db.rawQuery("SELECT password FROM " + DATABASE_TABLE + " WHERE name='" + name + "'", null);
-
-        if(cursor.moveToFirst()) {
-            return cursor.getString(0);
-        } else {
-            return null;
-        }
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-        cursor.close();
-        db.close();
     }
 }

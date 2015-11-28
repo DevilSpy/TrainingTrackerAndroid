@@ -1,9 +1,11 @@
 package fi.sami.trainingtracker.model;
 
+import com.orm.SugarRecord;
+
 /**
  * Created by Sami on 28.10.2015.
  */
-public class Location {
+public class Location extends SugarRecord<Location> {
     private String name;
     private String latitude;
     private String longitude;

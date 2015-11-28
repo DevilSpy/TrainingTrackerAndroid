@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import fi.sami.trainingtracker.DatabaseOpenHelper;
-import fi.sami.trainingtracker.MainActivity;
 import fi.sami.trainingtracker.R;
+import fi.sami.trainingtracker.model.User;
 
 /**
  * Created by Sami on 30.10.2015.
@@ -89,27 +86,19 @@ public class SelectParticipantsDialogFragment extends DialogFragment {
     }
 
     private String[] getParticipants() {
-        List<String> participants = new ArrayList<String>();
 
-        SQLiteDatabase db = (new DatabaseOpenHelper(getContext())).getWritableDatabase();
-        String query = "SELECT name FROM user;";
+        List<User> users =  User.listAll(User.class);
+        List<String> userNames = new ArrayList<String>();
 
-        Cursor cursor = db.rawQuery(query, null);
-        if(cursor.moveToFirst()) {
-            participants.add(cursor.getString(0));
-            while(cursor.moveToNext()) {
-                participants.add(cursor.getString(0));
-            }
+        for(User user : users) {
+            userNames.add(user.getName());
         }
 
-        cursor.close();
-        db.close();
-
-        String[] participantsStringArray = participants.toArray(new String[participants.size()]);
+        String[] participantsStringArray = userNames.toArray(new String[userNames.size()]);
         return participantsStringArray;
     }
 
     public interface SelectParticipantsDialogFragmentListener {
-        public void onReturnValue(List<String> participants);
+        void onReturnValue(List<String> participants);
     }
 }

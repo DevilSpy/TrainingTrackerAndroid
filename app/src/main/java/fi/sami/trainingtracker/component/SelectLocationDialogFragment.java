@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import fi.sami.trainingtracker.DatabaseOpenHelper;
-import fi.sami.trainingtracker.MainActivity;
 import fi.sami.trainingtracker.R;
+import fi.sami.trainingtracker.model.Location;
 
 /**
  * Created by Sami on 5.11.2015.
@@ -65,27 +62,18 @@ public class SelectLocationDialogFragment extends DialogFragment {
     }
 
     private String[] getLocations() {
-        List<String> locations = new ArrayList<String>();
+        List<Location> locations = Location.listAll(Location.class);
+        List<String> locationNames = new ArrayList<String>();
 
-        SQLiteDatabase db = (new DatabaseOpenHelper(getContext())).getWritableDatabase();
-        String query = "SELECT name FROM location;";
-
-        Cursor cursor = db.rawQuery(query, null);
-        if(cursor.moveToFirst()) {
-            locations.add(cursor.getString(0));
-            while (cursor.moveToNext()) {
-                locations.add(cursor.getString(0));
-            }
+        for(Location location : locations) {
+            locationNames.add(location.getName());
         }
 
-        cursor.close();
-        db.close();
-
-        String[] locationsStringArray = locations.toArray(new String[locations.size()]);
+        String[] locationsStringArray = locationNames.toArray(new String[locationNames.size()]);
         return locationsStringArray;
     }
 
     public interface SelectLocationDialogFragmentListener {
-        public void onReturnValue(String location);
+        void onReturnValue(String location);
     }
 }
