@@ -42,11 +42,22 @@
         android:textColor="@color/textGrey"
         />
 
+    <TextView
+        android:id="@+id/accountHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/editTextPassword"
+        android:text="@string/accountHint"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        />
+
     <Button
         android:id="@+id/buttonSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextPassword"
+        android:layout_below="@+id/accountHint"
         android:layout_centerHorizontal="true"
         android:onClick="login"
         android:text="@string/login"

@@ -10,6 +10,7 @@
     <string name="login">Sign in</string>
     <string name="usernameHint">Username</string>
     <string name="passwordHint">Password</string>
+    <string name="accountHint">Hint: Sami / pwd</string>
 
     <string name="addNewExercise">Add new exercise</string>
     <string name="addDate"><u>Date</u></string>
