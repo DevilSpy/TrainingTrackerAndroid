@@ -109,16 +109,12 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.YEAR, year);
 
-        // TODO: do something with the date
         date = calendar.getTime();
 
         String dateToDisplay = year + "-" + month + "-" + day;
 
         TextView selectedDateTextView = (TextView)findViewById(R.id.dateSetText);
         selectedDateTextView.setText("Date: " + dateToDisplay);
-
-        Button addExerciseButton = (Button)findViewById(R.id.addNewExerciseButton);
-        addExerciseButton.setEnabled(true);
 
     }
 

@@ -17,10 +17,6 @@ import fi.sami.trainingtracker.model.User;
  * Created by Sami on 20.10.2015.
  */
 public class LoginActivity extends Activity {
-//    private final String DATABASE_TABLE = "user";
-//    private final int DELETED_ID = 0;
-//    private SQLiteDatabase db;
-//    private Cursor cursor;
 
     Button loginButton;
     EditText usernameText;
